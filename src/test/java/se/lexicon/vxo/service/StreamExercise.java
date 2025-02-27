@@ -136,9 +136,10 @@ public class StreamExercise {
     public void task8() {
         LocalDate expectedBirthDate = LocalDate.parse("1910-01-02");
 
+        Comparator<Person> comparator = Comparator.comparing(Person::getDateOfBirth);
         Optional<Person> optional = null;
 
-        // todo: write your code here
+        optional = people.stream().min(comparator);
 
         assertNotNull(optional);
         assertEquals(expectedBirthDate, optional.get().getDateOfBirth());
