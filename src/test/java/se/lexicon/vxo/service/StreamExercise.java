@@ -44,7 +44,7 @@ public class StreamExercise {
     public void task2() {
         long amount = 0;
 
-        // todo: write your code here
+        amount = people.stream().count();
 
         assertEquals(10000, amount);
     }
@@ -57,7 +57,8 @@ public class StreamExercise {
         long amount = 0;
         int expected = 90;
 
-        // todo: write your code here
+        Predicate<Person> filter = p -> p.getLastName().equals("Andersson");
+        amount = people.stream().filter(filter).count();
 
         assertEquals(expected, amount);
     }
@@ -70,7 +71,7 @@ public class StreamExercise {
         int expectedSize = 4988;
         List<Person> females = null;
 
-        // todo: write your code here
+        females = people.stream().filter(p -> p.getGender() == Gender.FEMALE).collect(Collectors.toList());
 
         assertNotNull(females);
         assertEquals(expectedSize, females.size());
@@ -85,7 +86,7 @@ public class StreamExercise {
         Set<LocalDate> dates = null;
 
 
-        // todo: write your code here
+        dates = people.stream().map(Person::getDateOfBirth).collect(Collectors.toCollection(TreeSet::new));
 
 
         assertNotNull(dates);
@@ -102,7 +103,8 @@ public class StreamExercise {
 
         Person[] result = null;
 
-        // todo: write your code here
+        Predicate<Person> filter = p -> p.getFirstName().equals("Erik");
+        result = people.stream().filter(filter).toArray(Person[]::new);
 
 
         assertNotNull(result);
@@ -118,7 +120,8 @@ public class StreamExercise {
 
         Optional<Person> optional = null;
 
-        // todo: write your code here
+        Predicate<Person> filter = p -> p.getPersonId() == 5436;
+        optional = people.stream().filter(filter).findFirst();
 
 
         assertNotNull(optional);
