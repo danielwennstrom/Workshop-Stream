@@ -201,15 +201,11 @@ public class StreamExercise {
         double expected = 54.42;
         double averageAge = 0;
 
-        ToIntFunction<Person> personToAge = p -> Period.between(p.getDateOfBirth(), LocalDate.now()).getYears();
+        ToIntFunction<Person> personToAge = person -> Period.between(person.getDateOfBirth(), LocalDate.parse("2019-12-20")).getYears();
         averageAge = people.stream()
                 .mapToInt(personToAge)
-                .average().orElse(0);
-
-        System.out.println("Calculated Average Age: " + averageAge);
-        people.stream()
-                .mapToInt(personToAge)
-                .forEach(age -> System.out.println("Person age: " + age));
+                .average()
+                .orElse(0);
 
         assertTrue(averageAge > 0);
         assertEquals(expected, averageAge, .01);
