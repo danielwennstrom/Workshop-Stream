@@ -8,6 +8,7 @@ import se.lexicon.vxo.model.PersonDto;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -156,7 +157,9 @@ public class StreamExercise {
         List<PersonDto> dtoList = null;
 
         Predicate<Person> filter = p -> p.getDateOfBirth().isBefore(date);
-        Function<Person, PersonDto> func = p -> new PersonDto(p.getPersonId(), p.getFirstName() + " " + p.getLastName());
+        Function<Person, PersonDto> func = p -> new PersonDto(p.getPersonId(),
+                p.getFirstName() + " " + p.getLastName());
+
         dtoList = people.stream()
                 .filter(filter)
                 .map(func).collect(Collectors.toList());
@@ -177,9 +180,12 @@ public class StreamExercise {
         int personId = 5914;
 
         Optional<String> optional = null;
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy");
 
-        // todo: write your code here
-
+        optional = people.stream()
+                .filter(p -> p.getPersonId() == 5914)
+                .map(Person::getDateOfBirth)
+                .map(date -> date.format(format).toUpperCase()).findFirst();
 
         assertNotNull(optional);
         assertTrue(optional.isPresent());
