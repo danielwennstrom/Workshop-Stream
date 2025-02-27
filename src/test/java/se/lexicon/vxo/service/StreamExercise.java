@@ -201,7 +201,15 @@ public class StreamExercise {
         double expected = 54.42;
         double averageAge = 0;
 
-        // todo: write your code here
+        ToIntFunction<Person> personToAge = p -> Period.between(p.getDateOfBirth(), LocalDate.now()).getYears();
+        averageAge = people.stream()
+                .mapToInt(personToAge)
+                .average().orElse(0);
+
+        System.out.println("Calculated Average Age: " + averageAge);
+        people.stream()
+                .mapToInt(personToAge)
+                .forEach(age -> System.out.println("Person age: " + age));
 
         assertTrue(averageAge > 0);
         assertEquals(expected, averageAge, .01);
@@ -216,7 +224,18 @@ public class StreamExercise {
 
         String[] result = null;
 
-        // todo: write your code here
+        Predicate<Person> filter = p -> p.getFirstName()
+                .toLowerCase()
+                .contentEquals(new StringBuilder(p.getFirstName().toLowerCase()).reverse());
+
+        Comparator<String> comparator = String::compareTo;
+
+        result = people.stream()
+                .filter(filter)
+                .map(Person::getFirstName)
+                .distinct()
+                .sorted(comparator)
+                .toArray(String[]::new);
 
         assertNotNull(result);
         assertArrayEquals(expected, result);
