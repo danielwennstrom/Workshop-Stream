@@ -155,7 +155,11 @@ public class StreamExercise {
 
         List<PersonDto> dtoList = null;
 
-        // todo: write your code here
+        Predicate<Person> filter = p -> p.getDateOfBirth().isBefore(date);
+        Function<Person, PersonDto> func = p -> new PersonDto(p.getPersonId(), p.getFirstName() + " " + p.getLastName());
+        dtoList = people.stream()
+                .filter(filter)
+                .map(func).collect(Collectors.toList());
 
 
         assertNotNull(dtoList);
